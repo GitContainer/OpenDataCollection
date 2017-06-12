@@ -13,7 +13,7 @@ class OpenData:
         pass
 
     def get_response(self):
-        url = "http://opendata.cwb.gov.tw/api/v1/rest/dataset/{0}".format(self.__dataId)
+        url = "http://opendata.cwb.gov.tw/api/v1/rest/datastore/{0}".format(self.__dataId)
         payload = self._get_payload()
         if payload is None:
             return requests.get(url, headers=self.__headers)

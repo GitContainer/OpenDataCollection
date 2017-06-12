@@ -1,10 +1,7 @@
 from enum import Enum
 
+from cwb.api.Enum import Format
 from cwb.api.OpenData import OpenData
-
-
-class Sort(Enum):
-    time = "time"
 
 
 class ElementName(Enum):
@@ -13,11 +10,6 @@ class ElementName(Enum):
     CI = "CI"
     MinT = "MinT"
     MaxT = "MaxT"
-
-
-class Format(Enum):
-    xml = "xml"
-    json = "json"
 
 
 class FC0032(OpenData):
@@ -42,7 +34,7 @@ class FC0032(OpenData):
         if len(self._locationNameList) != 0:
             if payload is None:
                 payload = {}
-            payload["locationName"] = ",".join(ln.value for ln in self._locationNameList)
+            payload["locationName"] = ",".join(self._locationNameList)
 
         if len(self._elementNameList) != 0:
             if payload is None:

@@ -1,6 +1,7 @@
 import unittest
-from cwb.api.FC0032 import FC0032, Format, ElementName, Sort
-from cwb.api.LocationName import LocationName
+
+from cwb.api.Enum import Format, Sort
+from cwb.api.FC0032 import FC0032, ElementName
 
 
 class TestFC0032(unittest.TestCase):
@@ -14,8 +15,8 @@ class TestFC0032(unittest.TestCase):
         api.set_limit(2)
         api.set_offset(1)
         api.set_format(Format.xml)
-        api.add_location_name(LocationName.YilanCounty)
-        api.add_location_name(LocationName.HualienCounty)
+        api.add_location_name("宜蘭縣")
+        api.add_location_name("花蓮縣")
         api.add_element_name(ElementName.Wx)
         api.add_element_name(ElementName.PoP)
         api.add_sort(Sort.time)
