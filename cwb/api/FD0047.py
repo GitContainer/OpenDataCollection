@@ -2,6 +2,13 @@ from enum import Enum
 
 from cwb.api.Enum import Format
 from cwb.api.OpenData import OpenData
+from cwb.data.Contents import Contents
+from cwb.data.DataSet import DataSet
+from cwb.data.DataSetInfo import DataSetInfo
+from cwb.data.Locations import Locations, Location
+from cwb.data.ParameterSet import Parameter
+from cwb.data.Time import Time
+from cwb.data.WeatherElement import WeatherElement
 
 
 class ElementName(Enum):
@@ -18,6 +25,74 @@ class ElementName(Enum):
 
 
 class FD0047(OpenData):
+    def get_data_set(self):
+        records = self.get_response().json()["records"]
+
+        contents = Contents()
+        contents.ContentDescription = records["contentDescription"]
+
+        data_set = DataSet()
+        data_set.Contents = contents
+
+        for ls in records["locations"]:
+            locations = Locations()
+
+            data_set_info = DataSetInfo()
+            data_set_info.DataSetDescription = ls["datasetDescription"]
+            locations.DataSetInfo = data_set_info
+
+            locations.LocationsName = ls["locationsName"]
+            locations.DataId = ls["dataid"]
+
+            for l in ls["location"]:
+                location = Location()
+                location.LocationName = l["locationName"]
+                if l.get("geocode", None) is not None:
+                    location.GeoCode = l["geocode"]
+                if l.get("lat", None) is not None:
+                    location.Lat = l["lat"]
+                if l.get("lon", None) is not None:
+                    location.Lon = l["lon"]
+
+                for we in l["weatherElement"]:
+                    weather_element = WeatherElement()
+                    weather_element.ElementName = we["elementName"]
+                    if we.get("elementMeasure", None) is not None:
+                        weather_element.ElementMeasure = we["elementMeasure"]
+
+                    for t in we["time"]:
+                        time = Time()
+                        if t.get("startTime", None) is not None:
+                            time.StartTime = t["startTime"]
+                        if t.get("endTime", None) is not None:
+                            time.EndTime = t["endTime"]
+                        if t.get("dataTime", None) is not None:
+                            time.DataTime = t["dataTime"]
+                        if t.get("elementValue", None) is not None:
+                            time.ElementValue = t["elementValue"]
+
+                        if t.get("parameter", None) is not None:
+                            parameter_list = []
+                            for p in t["parameter"]:
+                                parameter = Parameter()
+                                if p.get("parameterName", None) is not None:
+                                    parameter.ParameterName = p["parameterName"]
+                                if p.get("parameterValue", None) is not None:
+                                    parameter.ParameterValue = p["parameterValue"]
+                                if p.get("parameterUnit", None) is not None:
+                                    parameter.ParameterUnit = p["parameterUnit"]
+                            time.Parameter = parameter_list
+
+                        weather_element.TimeList.append(time)
+
+                    location.WeatherElementList.append(weather_element)
+
+                locations.LocationList.append(location)
+
+            data_set.LocationsList.append(locations)
+
+        return data_set
+
     def _get_payload(self):
         payload = None
 

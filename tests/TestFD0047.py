@@ -29,16 +29,21 @@ class TestFD0047(unittest.TestCase):
     #     data = response.json()
     #     print(data)
 
-    def test_get_response_payload(self):
-        api = FD0047("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB", "001")
-        api.set_limit(2)
-        api.set_offset(1)
-        # api.set_format(Format.xml)
-        api.set_location_name("頭城鎮")
-        api.add_element_name(ElementName.Wx)
-        api.add_element_name(ElementName.Wind)
-        api.add_sort(Sort.time)
+    # def test_get_response_payload(self):
+    #     api = FD0047("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB", "001")
+    #     api.set_limit(2)
+    #     api.set_offset(1)
+    #     # api.set_format(Format.xml)
+    #     api.set_location_name("頭城鎮")
+    #     api.add_element_name(ElementName.Wx)
+    #     api.add_element_name(ElementName.Wind)
+    #     api.add_sort(Sort.time)
+    #
+    #     response = api.get_response()
+    #     data = response.json()
+    #     print(data)
 
-        response = api.get_response()
-        data = response.json()
-        print(data)
+    def test_get_data_set_no_payload(self):
+        api = FD0047("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB", "001")
+        data_set = api.get_data_set()
+        print(data_set)

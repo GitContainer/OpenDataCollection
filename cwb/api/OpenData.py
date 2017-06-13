@@ -19,3 +19,7 @@ class OpenData:
             return requests.get(url, headers=self.__headers)
         else:
             return requests.get(url, params=payload, headers=self.__headers)
+
+    @abstractmethod
+    def get_data_set(self):
+        pass

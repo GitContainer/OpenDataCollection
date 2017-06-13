@@ -2,6 +2,12 @@ from enum import Enum
 
 from cwb.api.Enum import Format
 from cwb.api.OpenData import OpenData
+from cwb.data.DataSet import DataSet
+from cwb.data.DataSetInfo import DataSetInfo
+from cwb.data.Locations import Location
+from cwb.data.ParameterSet import Parameter
+from cwb.data.Time import Time
+from cwb.data.WeatherElement import WeatherElement
 
 
 class ElementName(Enum):
@@ -13,6 +19,45 @@ class ElementName(Enum):
 
 
 class FC0032(OpenData):
+    def get_data_set(self):
+        records = self.get_response().json()["records"]
+
+        data_set_info = DataSetInfo()
+        data_set_info.DataSetDescription = records["datasetDescription"]
+
+        data_set = DataSet()
+        data_set.DataSetInfo = data_set_info
+
+        for l in records["location"]:
+            location = Location()
+            location.LocationName = l["locationName"]
+
+            for we in l["weatherElement"]:
+                weather_element = WeatherElement()
+                weather_element.ElementName = we["elementName"]
+
+                for t in we["time"]:
+                    time = Time()
+                    time.StartTime = t["startTime"]
+                    time.EndTime = t["endTime"]
+
+                    parameter = Parameter()
+                    if t["parameter"].get("parameterName", None) is not None:
+                        parameter.ParameterName = t["parameter"]["parameterName"]
+                    if t["parameter"].get("parameterValue", None) is not None:
+                        parameter.ParameterValue = t["parameter"]["parameterValue"]
+                    if t["parameter"].get("parameterUnit", None) is not None:
+                        parameter.ParameterUnit = t["parameter"]["parameterUnit"]
+                    time.Parameter = parameter
+
+                    weather_element.TimeList.append(time)
+
+                location.WeatherElementList.append(weather_element)
+
+            data_set.LocationList.append(location)
+
+        return data_set
+
     def _get_payload(self):
         payload = None
 

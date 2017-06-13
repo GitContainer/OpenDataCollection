@@ -24,8 +24,13 @@ class TestFC0032(unittest.TestCase):
         payload = api.test_payload()
         print(payload)
 
-    def test_get_response_no_payload(self):
+    # def test_get_response_no_payload(self):
+    #     api = FC0032("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB")
+    #     response = api.get_response()
+    #     data = response.json()
+    #     print(data)
+
+    def test_get_data_set_no_payload(self):
         api = FC0032("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB")
-        response = api.get_response()
-        data = response.json()
-        print(data)
+        data_set = api.get_data_set()
+        print(data_set)
