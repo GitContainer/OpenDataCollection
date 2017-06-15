@@ -7,28 +7,28 @@ class Value:
 class ElementValue:
     def __init__(self, value):
         # 資料值
-        self.Value = value
+        self.value = value
         # 資料度量單位
-        self.Measures = None
+        self.measures = None
 
 
 # 自訂標籤
 class Parameter:
     def __init__(self):
         # 自訂標籤名稱
-        self.ParameterName = None
+        self.parameter_name = None
         # 自訂標籤值
-        self.ParameterValue = None
+        self.parameter_value = None
         # 自訂標籤單位
-        self.ParameterUnit = None
+        self.parameter_unit = None
 
 
 # 自訂標籤群組
 class ParameterSet:
     def __init__(self):
         # 自訂標籤群組名稱
-        self.ParameterSetName = None
+        self.parameter_set_name = None
         # 自訂標籤群組
-        self.ParameterSetList = []
+        self.parameter_set_list = []
         # 自訂標籤
-        self.ParameterList = []
+        self.parameter_list = []

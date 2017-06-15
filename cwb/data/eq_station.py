@@ -13,22 +13,22 @@ class Pga:
 class EqStation:
     def __init__(self):
         # 測站名稱
-        self.StationName = None
+        self.station_name = None
         # 測站代碼
-        self.StationCode = None
+        self.station_code = None
         # 測站位置經度
-        self.StationLon = None
+        self.station_lon = None
         # 測站位置緯度
-        self.StationLat = None
+        self.station_lat = None
         # 震央距離(單位=公里)
-        self.Distance = None
+        self.distance = None
         # 測站方位角(單位 = 度)
-        self.Azimuth = None
+        self.azimuth = None
         # 測站震度值
-        self.StationIntensity = None
+        self.station_intensity = None
         # 地震儀波形檔網址
-        self.WaveImageURI = None
+        self.wave_image_uri = None
         # 最大地動加速度資訊
-        self.Pga = None
+        self.pga = None
         # 資料來源方式
-        self.InfoStatus = None
+        self.info_status = None

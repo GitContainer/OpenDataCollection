@@ -2,47 +2,47 @@ from enum import Enum
 
 
 class MsgType(Enum):
-    Issue = 0
-    Update = 1
-    Cancel = 2
+    issue = 0
+    update = 1
+    cancel = 2
 
 
 class Scope(Enum):
-    Public = 0
-    Restricted = 1
-    Private = 2
+    public = 0
+    restricted = 1
+    private = 2
 
 
 class Status(Enum):
-    Actual = 0
-    Exercise = 1
-    System = 2
-    Test = 3
-    Draft = 4
+    actual = 0
+    exercise = 1
+    system = 2
+    test = 3
+    draft = 4
 
 
 # 氣象共用資料
 class CwbOpenData:
     def __init__(self, identifier, sender, sent, status, scope, msg_type):
         # 資料唯一識別碼
-        self.Identifier = identifier
+        self.identifier = identifier
         # 資料提供單位 email address
-        self.Sender = sender
+        self.sender = sender
         # 發布日期
-        self.Sent = sent
+        self.sent = sent
         # 資料狀態
-        self.Status = status
+        self.status = status
         # 資料公開對象
-        self.Scope = scope
+        self.scope = scope
         # 訊息類型 / 資料類型
-        self.MsgType = msg_type
+        self.msg_type = msg_type
         # 類別唯一識別碼
-        self.DataId = None
+        self.data_id = None
         # 備註
-        self.Note = None
+        self.note = None
         # 特殊資料碼
-        self.Code = None
+        self.code = None
         # 資料提供單位
-        self.Source = None
+        self.source = None
         # 資料集
-        self.DataSetList = []
+        self.data_set_list = []

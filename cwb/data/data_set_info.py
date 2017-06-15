@@ -2,18 +2,18 @@
 class DataSetInfo:
     def __init__(self):
         # 資料集描述
-        self.DataSetDescription = None
+        self.data_set_description = None
         # 資料集使用的語言
-        self.DataSetLanguage = None
+        self.data_set_language = None
         # 資料集發布時間
-        self.IssueTime = None
+        self.issue_time = None
         # 資料集有效時間
-        self.ValidTime = None
+        self.valid_time = None
         # 資料集更新時間
-        self.Update = None
+        self.update = None
         # 資料集狀態
-        self.Status = None
+        self.status = None
         # 自訂標籤
-        self.ParameterList = []
+        self.parameter_list = []
         # 自訂標籤群組
-        self.ParameterSetList = []
+        self.parameter_set_list = []

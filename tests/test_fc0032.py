@@ -1,7 +1,8 @@
 import unittest
 
+from cwb.api.ElementName import TodayTomorrowThirtySixHours
 from cwb.api.Enum import Format, Sort
-from cwb.api.FC0032 import FC0032, ElementName
+from cwb.api.FC0032 import FC0032
 
 
 class TestFC0032(unittest.TestCase):
@@ -17,8 +18,8 @@ class TestFC0032(unittest.TestCase):
         api.set_format(Format.xml)
         api.add_location_name("宜蘭縣")
         api.add_location_name("花蓮縣")
-        api.add_element_name(ElementName.Wx)
-        api.add_element_name(ElementName.PoP)
+        api.add_element_name(TodayTomorrowThirtySixHours.Wx)
+        api.add_element_name(TodayTomorrowThirtySixHours.PoP)
         api.add_sort(Sort.time)
 
         payload = api.test_payload()
@@ -30,7 +31,8 @@ class TestFC0032(unittest.TestCase):
     #     data = response.json()
     #     print(data)
 
-    def test_get_data_set_no_payload(self):
+    # [1].一般天氣預報 - 今明36小時天氣預報
+    def test_get_data_set_no_payload2(self):
         api = FC0032("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB")
         data_set = api.get_data_set()
         print(data_set)

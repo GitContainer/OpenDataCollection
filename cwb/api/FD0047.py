@@ -1,27 +1,12 @@
-from enum import Enum
-
 from cwb.api.Enum import Format
 from cwb.api.OpenData import OpenData
-from cwb.data.Contents import Contents
-from cwb.data.DataSet import DataSet
-from cwb.data.DataSetInfo import DataSetInfo
-from cwb.data.Locations import Locations, Location
-from cwb.data.ParameterSet import Parameter
-from cwb.data.Time import Time
+from cwb.data.contents import Contents
+from cwb.data.data_set import DataSet
+from cwb.data.data_set_info import DataSetInfo
+from cwb.data.locations import Locations, Location
+from cwb.data.parameter_set import Parameter
+from cwb.data.time import Time
 from cwb.data.WeatherElement import WeatherElement
-
-
-class ElementName(Enum):
-    Wx = "Wx"
-    PoP = "PoP"
-    AT = "AT"
-    T = "T"
-    RH = "RH"
-    CI = "CI"
-    WeatherDescription = "WeatherDescription"
-    PoP6h = "PoP6h"
-    Wind = "Wind"
-    Td = "Td"
 
 
 class FD0047(OpenData):
@@ -41,7 +26,8 @@ class FD0047(OpenData):
             data_set_info.DataSetDescription = ls["datasetDescription"]
             locations.DataSetInfo = data_set_info
 
-            locations.LocationsName = ls["locationsName"]
+            if ls.get("locationsName", None) is not None:
+                locations.LocationsName = ls["locationsName"]
             locations.DataId = ls["dataid"]
 
             for l in ls["location"]:
@@ -111,6 +97,11 @@ class FD0047(OpenData):
                 payload = {}
             payload["format"] = Format.xml.value
 
+        if self._data_location_id == "093" and len(self._locationIdList) != 0:
+            if payload is None:
+                payload = {}
+            payload["locationId"] = ",".join(li for li in self._locationIdList)
+
         if self._locationName != self._data_id:
             if payload is None:
                 payload = {}
@@ -128,12 +119,15 @@ class FD0047(OpenData):
 
         return payload
 
-    def __init__(self, authorization, location_id):
-        self._data_id = "F-D0047-" + location_id
+    def __init__(self, authorization, data_location_id):
+        self._data_location_id = data_location_id
+        self._data_id = "F-D0047-" + self._data_location_id
         super(FD0047, self).__init__(self._data_id, authorization)
         self._limit = -1
         self._offset = 0
         self._format = Format.json
+        if self._data_location_id == "093":
+            self._locationIdList = []
         self._locationName = self._data_id
         self._elementNameList = []
         self._sortList = []
@@ -146,6 +140,10 @@ class FD0047(OpenData):
 
     def set_format(self, format_enum):
         self._format = format_enum
+
+    def add_location_id(self, location_id):
+        if self._data_location_id == "093":
+            self._locationIdList.append(location_id)
 
     def set_location_name(self, location_name):
         self._locationName = location_name

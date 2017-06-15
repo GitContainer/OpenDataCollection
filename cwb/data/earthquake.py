@@ -2,50 +2,50 @@
 class ShakingArea:
     def __init__(self):
         # 分區描述
-        self.AreaDesc = None
+        self.area_desc = None
         # 分區名稱
-        self.AreaName = None
+        self.area_name = None
         # 分區震度
-        self.AreaIntensity = None
+        self.area_intensity = None
         # 分區圖示顏色
-        self.AreaColor = None
+        self.area_color = None
         # 資料來源方式
-        self.InfoStatus = None
+        self.info_status = None
         # 各地震站資訊
-        self.EqStationList = []
+        self.eq_station_list = []
 
 
 # 震度資訊
 class Intensity:
     def __init__(self):
         # 分區震度資訊
-        self.ShakingAreaList = []
+        self.shaking_area_list = []
 
 
 # 地震資訊
 class Earthquake:
     def __init__(self, report_type, earthquake_no):
         # 報文種類
-        self.ReportType = report_type
+        self.report_type = report_type
         # 地震報告編號
-        self.EarthquakeNo = earthquake_no
+        self.earthquake_no = earthquake_no
         # 開放資料公告報號
-        self.ReportNo = None
+        self.report_no = None
         # 報文內容
-        self.ReportContent = None
+        self.report_content = None
         # 開放資料燈號
-        self.ReportColor = None
+        self.report_color = None
         # 開放資料參考網址
-        self.Web = None
+        self.web = None
         # 地震報告圖網址
-        self.ReportImageURI = None
+        self.report_image_uri = None
         # 等震度圖網址
-        self.ShakeMapURI = None
+        self.shake_map_uri = None
         # 地震報告備註
-        self.ReportRemark = None
+        self.report_remark = None
         # 海嘯備註
-        self.TsunamiRemark = None
+        self.tsunami_remark = None
         # 地震資訊
-        self.EarthquakeInfo = None
+        self.earthquake_info = None
         # 震度資訊
-        self.Intensity = None
+        self.intensity = None

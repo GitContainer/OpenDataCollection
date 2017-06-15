@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class InfoStatus(Enum):
-    Predict = 0
-    Observe = 1
+    predict = 0
+    observe = 1
