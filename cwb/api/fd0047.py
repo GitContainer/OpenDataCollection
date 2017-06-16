@@ -1,17 +1,16 @@
-from cwb.api.Enum import Format
-from cwb.api.OpenData import OpenData
+from cwb.api.open_data import OpenData
 from cwb.data.contents import Contents
 from cwb.data.data_set import DataSet
 from cwb.data.data_set_info import DataSetInfo
 from cwb.data.locations import Locations, Location
 from cwb.data.parameter_set import Parameter
 from cwb.data.time import Time
-from cwb.data.WeatherElement import WeatherElement
+from cwb.data.weather_element import WeatherElement
 
 
 class FD0047(OpenData):
     def get_data_set(self):
-        records = self.get_response().json()["records"]
+        records = self._get_response().json()["records"]
 
         contents = Contents()
         contents.ContentDescription = records["contentDescription"]
@@ -69,92 +68,30 @@ class FD0047(OpenData):
                                     parameter.ParameterUnit = p["parameterUnit"]
                             time.Parameter = parameter_list
 
-                        weather_element.TimeList.append(time)
+                        weather_element.time_list.append(time)
 
-                    location.WeatherElementList.append(weather_element)
+                    location.weather_element_list.append(weather_element)
 
-                locations.LocationList.append(location)
+                locations.location_list.append(location)
 
-            data_set.LocationsList.append(locations)
+            data_set.locations_list.append(locations)
 
         return data_set
 
-    def _get_payload(self):
-        payload = None
-
-        if self._limit != -1:
-            if payload is None:
-                payload = {}
-            payload["limit"] = self._limit
-
-        if self._offset != 0:
-            if payload is None:
-                payload = {}
-            payload["offset"] = self._offset
-
-        if self._format != Format.json:
-            if payload is None:
-                payload = {}
-            payload["format"] = Format.xml.value
-
-        if self._data_location_id == "093" and len(self._locationIdList) != 0:
-            if payload is None:
-                payload = {}
-            payload["locationId"] = ",".join(li for li in self._locationIdList)
-
-        if self._locationName != self._data_id:
-            if payload is None:
-                payload = {}
-            payload["locationName"] = self._locationName
-
-        if len(self._elementNameList) != 0:
-            if payload is None:
-                payload = {}
-            payload["elementName"] = ",".join(en.value for en in self._elementNameList)
-
-        if len(self._sortList) != 0:
-            if payload is None:
-                payload = {}
-            payload["sort"] = ",".join(s.value for s in self._sortList)
-
-        return payload
-
-    def __init__(self, authorization, data_location_id):
-        self._data_location_id = data_location_id
-        self._data_id = "F-D0047-" + self._data_location_id
-        super(FD0047, self).__init__(self._data_id, authorization)
-        self._limit = -1
-        self._offset = 0
-        self._format = Format.json
-        if self._data_location_id == "093":
-            self._locationIdList = []
-        self._locationName = self._data_id
-        self._elementNameList = []
-        self._sortList = []
-
-    def set_limit(self, limit):
-        self._limit = limit
-
-    def set_offset(self, offset):
-        self._offset = offset
-
-    def set_format(self, format_enum):
-        self._format = format_enum
-
     def add_location_id(self, location_id):
-        if self._data_location_id == "093":
-            self._locationIdList.append(location_id)
+        if self.__data_location_id == "093":
+            self.__location_id_list.append(location_id)
 
-    def set_location_name(self, location_name):
-        self._locationName = location_name
+    def _set_payload(self, payload):
+        if self.__data_location_id == "093" and len(self.__location_id_list) != 0:
+            if payload is None:
+                payload = {}
+            payload["locationId"] = ",".join(li for li in self.__location_id_list)
 
-    def add_element_name(self, element_name):
-        if element_name not in self._elementNameList:
-            self._elementNameList.append(element_name)
+    def __init__(self, authorization, data_location_id, location_name=None):
+        self.__data_location_id = data_location_id
+        self._data_id = "F-D0047-" + self.__data_location_id
+        super(FD0047, self).__init__(authorization, self._data_id, location_name=location_name)
 
-    def add_sort(self, sort):
-        if sort not in self._sortList:
-            self._sortList.append(sort)
-
-    def test_payload(self):
-        return self._get_payload()
+        if self.__data_location_id == "093":
+            self.__location_id_list = []

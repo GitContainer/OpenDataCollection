@@ -1,11 +1,11 @@
-from cwb.api.OpenData import OpenData
+from cwb.api.open_data import OpenData
 
 
 class OA0017(OpenData):
-    def _get_payload(self):
+    def get_data_set(self):
         pass
 
-    def get_data_set(self):
+    def _set_payload(self, payload):
         pass
 
     def __init__(self, authorization):
