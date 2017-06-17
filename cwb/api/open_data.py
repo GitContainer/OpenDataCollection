@@ -9,8 +9,11 @@ class OpenData:
         self._data_id = data_id
         self._limit = -1
         self._offset = 0
+        # http://opendata.cwb.gov.tw/opendatadoc/MMC/A0021-001.pdf
         self.__location_name_list = location_name_list
         self.__location_name = location_name
+        # http://opendata.cwb.gov.tw/opendatadoc/MMC/A0017-001.pdf A0018-001.pdf A0019-001.pdf
+        self.__station_id = []
         self._element_name_list = []
         self._sort_list = []
 
@@ -19,6 +22,10 @@ class OpenData:
 
     def set_offset(self, offset):
         self._offset = offset
+
+    def add_station_id(self, station_id):
+        if station_id not in self.__station_id:
+            self.__station_id.append(station_id)
 
     def add_element_name(self, element_name):
         if element_name not in self._element_name_list:
@@ -50,6 +57,11 @@ class OpenData:
             if payload is None:
                 payload = {}
             payload["locationName"] = self.__location_name
+
+        if len(self.__station_id) != 0:
+            if payload is None:
+                payload = {}
+            payload["stationId"] = ",".join(si for si in self.__station_id)
 
         if len(self._element_name_list) != 0:
             if payload is None:

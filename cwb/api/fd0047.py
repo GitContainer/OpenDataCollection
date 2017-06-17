@@ -66,6 +66,8 @@ class FD0047(OpenData):
                                     parameter.ParameterValue = p["parameterValue"]
                                 if p.get("parameterUnit", None) is not None:
                                     parameter.ParameterUnit = p["parameterUnit"]
+                                parameter_list.append(parameter)
+
                             time.Parameter = parameter_list
 
                         weather_element.time_list.append(time)
@@ -88,10 +90,11 @@ class FD0047(OpenData):
                 payload = {}
             payload["locationId"] = ",".join(li for li in self.__location_id_list)
 
-    def __init__(self, authorization, data_location_id, location_name=None):
+    def __init__(self, authorization, data_location_id, location_name=None, location_name_list=[]):
         self.__data_location_id = data_location_id
         self._data_id = "F-D0047-" + self.__data_location_id
-        super(FD0047, self).__init__(authorization, self._data_id, location_name=location_name)
+        super(FD0047, self).__init__(authorization, self._data_id, location_name=location_name,
+                                     location_name_list=location_name_list)
 
         if self.__data_location_id == "093":
             self.__location_id_list = []

@@ -19,7 +19,8 @@ class Time:
         # 地點
         self.location = None
         # 氣象要素
-        self.weather_element = None
+        # self.weather_element = None
+        self.weather_element_list = []
         # (氣象)要素值
         self.element_value = None
         # 資料值

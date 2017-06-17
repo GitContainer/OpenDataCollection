@@ -13,7 +13,6 @@ class TestFC0032(unittest.TestCase):
 
     def test_payload(self):
         location_name_list = ["宜蘭縣", "花蓮縣"]
-
         api = FC0032("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB", location_name_list)
         api.set_limit(2)
         api.set_offset(1)

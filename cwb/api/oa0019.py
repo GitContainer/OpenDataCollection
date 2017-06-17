@@ -5,14 +5,14 @@ from cwb.data.time import Time
 from cwb.data.weather_element import WeatherElement
 
 
-class OA0017(OpenData):
+class OA0019(OpenData):
     def get_data_set(self):
         records = self._get_response().json()["records"]
         data_set = DataSet()
 
         for l in records["location"]:
             location = Location()
-            location.LocationName = l["locationName"]
+            location.location_name = l["locationName"]
             location.station_id = l["stationId"]
 
             for t in l["time"]:
@@ -36,4 +36,4 @@ class OA0017(OpenData):
         pass
 
     def __init__(self, authorization):
-        super(OA0017, self).__init__(authorization, "O-A0017-001")
+        super(OA0019, self).__init__(authorization, "O-A0019-001")
