@@ -1,11 +1,12 @@
+from cwb.data.source.data_set import DataSet
+from cwb.data.source.data_set_info import DataSetInfo
+from cwb.data.source.locations import Locations, Location
+from cwb.data.source.parameter_set import Parameter
+from cwb.data.source.time import Time
+from cwb.data.source.weather_element import WeatherElement
+
 from cwb.api.open_data import OpenData
-from cwb.data.contents import Contents
-from cwb.data.data_set import DataSet
-from cwb.data.data_set_info import DataSetInfo
-from cwb.data.locations import Locations, Location
-from cwb.data.parameter_set import Parameter
-from cwb.data.time import Time
-from cwb.data.weather_element import WeatherElement
+from cwb.data.source.contents import Contents
 
 
 class FD0047(OpenData):

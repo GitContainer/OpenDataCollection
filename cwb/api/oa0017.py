@@ -1,8 +1,9 @@
-from cwb.api.open_data import OpenData
 from cwb.data.data_set import DataSet
 from cwb.data.locations import Location
-from cwb.data.time import Time
 from cwb.data.weather_element import WeatherElement
+
+from cwb.api.open_data import OpenData
+from cwb.data.source.time import Time
 
 
 class OA0017(OpenData):
