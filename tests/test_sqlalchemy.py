@@ -5,30 +5,34 @@
 import hashlib
 import unittest
 
+# import pymysql
 import sqlalchemy
-from alembic import op
+# from alembic import op
 from sqlalchemy import Column, String, Integer, create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-Base = declarative_base()
+from cwb.api.fd0047 import FD0047
+from cwb.data.destination.task import TaskService
+
+# Base = declarative_base()
 
 
-class User(Base):
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(16))
-    username = Column(String(32))
-    password = Column(String(16))
-
-    def __init__(self, name, username, password):
-        self.name = name
-        self.username = username
-        self.password = hashlib.sha1(password).hexdigest()
-
-    def __repr__(self):
-        return "User('{}','{}', '{}')".format(self.name, self.username, self.password)
+# class User(Base):
+#     __tablename__ = 'users'
+#
+#     id = Column(Integer, primary_key=True)
+#     name = Column(String(16))
+#     username = Column(String(32))
+#     password = Column(String(16))
+#
+#     def __init__(self, name, username, password):
+#         self.name = name
+#         self.username = username
+#         self.password = hashlib.sha1(password).hexdigest()
+#
+#     def __repr__(self):
+#         return "User('{}','{}', '{}')".format(self.name, self.username, self.password)
 
 
 class TestSQLAlchemy(unittest.TestCase):
@@ -79,9 +83,14 @@ class TestSQLAlchemy(unittest.TestCase):
     #     for r in rows:
     #         print(r.id)
 
-    def test_alembic(self):
-        engine = create_engine("mysql+pymysql://root:123456@localhost/lighthouse", encoding='utf-8', echo=True)
-        metada = MetaData(bind=engine)
+    # def test_alembic(self):
+    #     engine = create_engine("mysql+pymysql://root:123456@localhost/lighthouse", encoding='utf-8', echo=True)
+    #     metada = MetaData(bind=engine)
+    #
+    #     tasks = sqlalchemy.Table("task", metada, autoload=True)
+    #     print(len(tasks))
 
-        tasks = sqlalchemy.Table("task", metada, autoload=True)
-        print(len(tasks))
+    def test_task(self):
+        api = FD0047("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB", "001", location_name="頭城鎮")
+        data_set = api.get_data_set()
+        TaskService.set_task(data_set)
