@@ -5,7 +5,9 @@
 import hashlib
 import unittest
 
-from sqlalchemy import Column, String, Integer, create_engine
+import sqlalchemy
+from alembic import op
+from sqlalchemy import Column, String, Integer, create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -66,13 +68,20 @@ class TestSQLAlchemy(unittest.TestCase):
     #     session.add(user_2)
     #     session.commit()
 
-    def test_query(self):
-        engine = create_engine("mysql+pymysql://root:123456@localhost/test", encoding='utf-8', echo=True)
-        # Base.metadata.create_all(engine)
+    # def test_query(self):
+    #     engine = create_engine("mysql+pymysql://root:123456@localhost/test", encoding='utf-8', echo=True)
+    #     # Base.metadata.create_all(engine)
+    #
+    #     Session = sessionmaker(bind=engine)
+    #     session = Session()
+    #
+    #     rows = session.query(User).from_statement('SELECT * FROM users WHERE name=:name').params(name='user1')
+    #     for r in rows:
+    #         print(r.id)
 
-        Session = sessionmaker(bind=engine)
-        session = Session()
+    def test_alembic(self):
+        engine = create_engine("mysql+pymysql://root:123456@localhost/lighthouse", encoding='utf-8', echo=True)
+        metada = MetaData(bind=engine)
 
-        rows = session.query(User).from_statement('SELECT * FROM users WHERE name=:name').params(name='user1')
-        for r in rows:
-            print(r.id)
+        tasks = sqlalchemy.Table("task", metada, autoload=True)
+        print(len(tasks))
