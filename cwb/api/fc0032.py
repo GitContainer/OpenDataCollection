@@ -13,31 +13,31 @@ class FC0032(OpenData):
         records = self._get_response().json()["records"]
 
         data_set_info = DataSetInfo()
-        data_set_info.DataSetDescription = records["datasetDescription"]
+        data_set_info.data_set_description = records["datasetDescription"]
 
         data_set = DataSet()
-        data_set.DataSetInfo = data_set_info
+        data_set.data_set_info = data_set_info
 
         for l in records["location"]:
             location = Location()
-            location.LocationName = l["locationName"]
+            location.location_name = l["locationName"]
 
             for we in l["weatherElement"]:
                 weather_element = WeatherElement()
-                weather_element.ElementName = we["elementName"]
+                weather_element.element_name = we["elementName"]
 
                 for t in we["time"]:
                     time = Time()
-                    time.StartTime = t["startTime"]
-                    time.EndTime = t["endTime"]
+                    time.start_time = t["startTime"]
+                    time.end_time = t["endTime"]
 
                     parameter = Parameter()
                     if t["parameter"].get("parameterName", None) is not None:
-                        parameter.ParameterName = t["parameter"]["parameterName"]
+                        parameter.parameter_name = t["parameter"]["parameterName"]
                     if t["parameter"].get("parameterValue", None) is not None:
-                        parameter.ParameterValue = t["parameter"]["parameterValue"]
+                        parameter.parameter_value = t["parameter"]["parameterValue"]
                     if t["parameter"].get("parameterUnit", None) is not None:
-                        parameter.ParameterUnit = t["parameter"]["parameterUnit"]
+                        parameter.parameter_unit = t["parameter"]["parameterUnit"]
                     time.Parameter = parameter
 
                     weather_element.time_list.append(time)

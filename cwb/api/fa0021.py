@@ -18,11 +18,11 @@ class FA0021(OpenData):
         data_set_info.note = records["note"]
 
         data_set = DataSet()
-        data_set.DataSetInfo = data_set_info
+        data_set.data_set_info = data_set_info
 
         for l in records["location"]:
             location = Location()
-            location.LocationName = l["locationName"]
+            location.location_name = l["locationName"]
             location.station_id = l["stationId"]
 
             location.valid_time_list = []

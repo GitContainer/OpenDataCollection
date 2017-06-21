@@ -3,37 +3,30 @@ from sqlalchemy.orm import sessionmaker
 
 from cwb.data.destination import database
 from cwb.data.destination.database import Task
+from cwb.data.destination.location import LocationService
 
 
 class TaskService:
     @staticmethod
-    def set_task(data_set):
+    def set_task(source):
         Session = sessionmaker(bind=database.engine)
         session = Session()
 
         task = Task()
         task.crawl_time = datetime.now()
-        task.description = data_set.Contents.content_description
+        task.description = source.contents.content_description
         session.add(task)
 
-        for locations in data_set.locations_list:
+        all_success = True
+        for locations in source.locations_list:
             for location in locations.location_list:
+                if not LocationService.set_location(session, location, task.task_id):
+                    all_success = False
+                    break
 
-
-        row = session.query(Task).first()
-        if row:
-            print("Found data")
-            print(row)
+        if all_success:
+            session.commit()
+            return True
         else:
-            print("Can't find data")
-
-        session.rollback()
-
-        row = session.query(Task).first()
-        if row:
-            print("Found data after rollback")
-            print(row)
-        else:
-            print("Can't find data after rollback")
-
-        session.commit()
+            session.rollback()
+            return False

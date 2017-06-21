@@ -11,3 +11,15 @@ class Task(Base):
 
 class Location(Base):
     __table__ = Table('location', Base.metadata, autoload=True, autoload_with=engine)
+
+
+class WeatherElement(Base):
+    __table__ = Table('weather_element', Base.metadata, autoload=True, autoload_with=engine)
+
+
+class Time(Base):
+    __table__ = Table('time', Base.metadata, autoload=True, autoload_with=engine)
+
+
+class Parameter(Base):
+    __table__ = Table('parameter', Base.metadata, autoload=True, autoload_with=engine)

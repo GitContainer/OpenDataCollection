@@ -13,7 +13,7 @@ class OA0017(OpenData):
 
         for l in records["location"]:
             location = Location()
-            location.LocationName = l["locationName"]
+            location.location_name = l["locationName"]
             location.station_id = l["stationId"]
 
             for t in l["time"]:

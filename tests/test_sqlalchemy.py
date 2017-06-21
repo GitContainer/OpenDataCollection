@@ -15,6 +15,7 @@ from sqlalchemy.orm import sessionmaker
 from cwb.api.fd0047 import FD0047
 from cwb.data.destination.task import TaskService
 
+
 # Base = declarative_base()
 
 
@@ -93,4 +94,5 @@ class TestSQLAlchemy(unittest.TestCase):
     def test_task(self):
         api = FD0047("CWB-C9C20F8C-2237-46EB-B015-C52E09A8BDDB", "001", location_name="頭城鎮")
         data_set = api.get_data_set()
-        TaskService.set_task(data_set)
+        success = TaskService.set_task(data_set)
+        self.assertTrue(success)

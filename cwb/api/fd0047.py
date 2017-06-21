@@ -27,8 +27,8 @@ class FD0047(OpenData):
             locations.data_set_info = data_set_info
 
             if ls.get("locationsName", None) is not None:
-                locations.LocationsName = ls["locationsName"]
-            locations.DataId = ls["dataid"]
+                locations.locations_name = ls["locationsName"]
+            locations.data_id = ls["dataid"]
 
             for l in ls["location"]:
                 location = Location()
@@ -42,34 +42,34 @@ class FD0047(OpenData):
 
                 for we in l["weatherElement"]:
                     weather_element = WeatherElement()
-                    weather_element.ElementName = we["elementName"]
+                    weather_element.element_name = we["elementName"]
                     if we.get("elementMeasure", None) is not None:
-                        weather_element.ElementMeasure = we["elementMeasure"]
+                        weather_element.element_measure = we["elementMeasure"]
 
                     for t in we["time"]:
                         time = Time()
                         if t.get("startTime", None) is not None:
-                            time.StartTime = t["startTime"]
+                            time.start_time = t["startTime"]
                         if t.get("endTime", None) is not None:
-                            time.EndTime = t["endTime"]
+                            time.end_time = t["endTime"]
                         if t.get("dataTime", None) is not None:
-                            time.DataTime = t["dataTime"]
+                            time.data_time = t["dataTime"]
                         if t.get("elementValue", None) is not None:
-                            time.ElementValue = t["elementValue"]
+                            time.element_value = t["elementValue"]
 
                         if t.get("parameter", None) is not None:
                             parameter_list = []
                             for p in t["parameter"]:
                                 parameter = Parameter()
                                 if p.get("parameterName", None) is not None:
-                                    parameter.ParameterName = p["parameterName"]
+                                    parameter.parameter_name = p["parameterName"]
                                 if p.get("parameterValue", None) is not None:
-                                    parameter.ParameterValue = p["parameterValue"]
+                                    parameter.parameter_value = p["parameterValue"]
                                 if p.get("parameterUnit", None) is not None:
-                                    parameter.ParameterUnit = p["parameterUnit"]
+                                    parameter.parameter_unit = p["parameterUnit"]
                                 parameter_list.append(parameter)
 
-                            time.Parameter = parameter_list
+                            time.parameter = parameter_list
 
                         weather_element.time_list.append(time)
 
