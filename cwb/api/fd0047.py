@@ -14,17 +14,17 @@ class FD0047(OpenData):
         records = self._get_response().json()["records"]
 
         contents = Contents()
-        contents.ContentDescription = records["contentDescription"]
+        contents.content_description = records["contentDescription"]
 
         data_set = DataSet()
-        data_set.Contents = contents
+        data_set.contents = contents
 
         for ls in records["locations"]:
             locations = Locations()
 
             data_set_info = DataSetInfo()
-            data_set_info.DataSetDescription = ls["datasetDescription"]
-            locations.DataSetInfo = data_set_info
+            data_set_info.data_set_description = ls["datasetDescription"]
+            locations.data_set_info = data_set_info
 
             if ls.get("locationsName", None) is not None:
                 locations.LocationsName = ls["locationsName"]
@@ -32,13 +32,13 @@ class FD0047(OpenData):
 
             for l in ls["location"]:
                 location = Location()
-                location.LocationName = l["locationName"]
+                location.location_name = l["locationName"]
                 if l.get("geocode", None) is not None:
-                    location.GeoCode = l["geocode"]
+                    location.geo_code = l["geocode"]
                 if l.get("lat", None) is not None:
-                    location.Lat = l["lat"]
+                    location.lat = l["lat"]
                 if l.get("lon", None) is not None:
-                    location.Lon = l["lon"]
+                    location.lon = l["lon"]
 
                 for we in l["weatherElement"]:
                     weather_element = WeatherElement()

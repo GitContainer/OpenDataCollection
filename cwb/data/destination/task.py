@@ -1,23 +1,24 @@
 from datetime import datetime
-
-import sqlalchemy
-from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
+
+from cwb.data.destination import database
+from cwb.data.destination.database import Task
 
 
 class TaskService:
     @staticmethod
     def set_task(data_set):
-        engine = create_engine("mysql+pymysql://root:123456@localhost/lighthouse", encoding='utf-8', echo=True)
-        metada = MetaData(bind=engine)
-
-        Session = sessionmaker(bind=engine)
+        Session = sessionmaker(bind=database.engine)
         session = Session()
 
-        Task = sqlalchemy.Table("task", metada, autoload=True)
         task = Task()
         task.crawl_time = datetime.now()
+        task.description = data_set.Contents.content_description
         session.add(task)
+
+        for locations in data_set.locations_list:
+            for location in locations.location_list:
+
 
         row = session.query(Task).first()
         if row:
