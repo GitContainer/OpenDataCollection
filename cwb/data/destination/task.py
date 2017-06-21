@@ -16,6 +16,7 @@ class TaskService:
         task.crawl_time = datetime.now()
         task.description = source.contents.content_description
         session.add(task)
+        session.flush()
 
         all_success = True
         for locations in source.locations_list:

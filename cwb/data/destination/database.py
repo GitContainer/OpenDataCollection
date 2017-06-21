@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Table
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine("mysql+pymysql://root:123456@localhost/lighthouse", encoding='utf-8', echo=True)
+engine = create_engine("mysql+pymysql://root:123456@localhost/lighthouse?charset=utf8", encoding='utf-8', echo=True)
 Base = declarative_base()
 
 

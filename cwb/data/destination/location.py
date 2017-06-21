@@ -6,9 +6,9 @@ class LocationService:
     @staticmethod
     def set_location(session, source, task_id):
         row = session.query(Location).filter_by(name=source.location_name).first()
-        location_id = row.location_id
-
-        if not row:
+        if row:
+            location_id = row.location_id
+        else:
             location = Location()
             location.name = source.location_name
             if source.geo_code is not None:
@@ -18,6 +18,7 @@ class LocationService:
             if source.lon is not None:
                 location.lon = source.lon
             session.add(location)
+            session.flush()
             location_id = location.location_id
 
         for we in source.weather_element_list:

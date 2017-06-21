@@ -18,9 +18,11 @@ class TimeService:
         if source.element_value is not None:
             time.element_value = source.element_value
         session.add(time)
+        session.flush()
 
-        for p in source.parameter:
-            if not ParameterService.set_parameter(session, p, time.time_id):
-                return False
+        if source.parameter is not None:
+            for p in source.parameter:
+                if not ParameterService.set_parameter(session, p, time.time_id):
+                    return False
 
         return True
