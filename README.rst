@@ -8,6 +8,8 @@
 ----
 在 setup.conf 中的更改 EveryDayAt 為每天固定執行的時間。
 
+CWBAuthorization 則必須填上氣象資料開放平台，會員帳號對應之授權碼，詳細請參考`資料使用說明 <http://opendata.cwb.gov.tw/usages>`。
+
 用法
 ----
 - 開始服務 $python script.py start
